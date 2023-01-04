@@ -1,0 +1,18 @@
+<table
+  class="table table-md table-bordered table-hover table-striped text-center w-50 mx-auto mt-3"
+>
+  <thead class="table-dark">
+    <tr>
+      <td class="text-uppercase">product id</td>
+      <td class="text-uppercase">product name</td>
+      <td class="text-uppercase">unit price</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products">
+      <td class="fw-bolder">{{ product.productId }}</td>
+      <td>{{ product.productName }}</td>
+      <td>{{ product.unitPrice }}</td>
+    </tr>
+  </tbody>
+</table>
