@@ -5,7 +5,17 @@ Hello {{ user }} <br /><br />
 <ul>
   <li *ngFor="let product of products">{{ product.productName }}</li>
 </ul> -->
+
 <app-navbar></app-navbar>
-<app-product></app-product>
-<app-category></app-category>
-<router-outlet></router-outlet>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <app-category></app-category>
+    </div>
+    <div class="col-md-9">
+      <app-product></app-product>
+    </div>
+  </div>
+
+  <router-outlet></router-outlet>
+</div>

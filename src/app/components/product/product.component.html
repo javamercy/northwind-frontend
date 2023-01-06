@@ -1,18 +1,31 @@
+<div
+  class="spinner-border text-danger position-absolute top-0 end-0"
+  role="status"
+  *ngIf="dataLoaded == false"
+>
+  <span class="visually-hidden">Loading...</span>
+</div>
+
 <table
-  class="table table-md table-bordered table-hover table-striped text-center w-50 mx-auto mt-3"
+  *ngIf="dataLoaded"
+  class="table table-md table-bordered table-hover table-striped text-center mx-auto"
 >
   <thead class="table-dark">
     <tr>
-      <td class="text-uppercase">product id</td>
-      <td class="text-uppercase">product name</td>
-      <td class="text-uppercase">unit price</td>
+      <th class="text-uppercase">product id</th>
+      <th class="text-uppercase">category id</th>
+      <th class="text-uppercase">product name</th>
+      <th class="text-uppercase">unit price</th>
+      <th class="text-uppercase">units in stock</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let product of products">
-      <td class="fw-bolder">{{ product.productId }}</td>
+      <td>{{ product.productId }}</td>
+      <td>{{ product.categoryId }}</td>
       <td>{{ product.productName }}</td>
       <td>{{ product.unitPrice }}</td>
+      <td>{{ product.unitsInStock }}</td>
     </tr>
   </tbody>
 </table>
