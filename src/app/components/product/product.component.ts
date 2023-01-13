@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
@@ -9,21 +10,41 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./product.component.css'],
 })
 export class ProductComponent implements OnInit {
-  public products: Product[] = [];
+  products: Product[] = [];
   dataLoaded: boolean = false;
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.getProducts();
+    this.activatedRoute.params.subscribe((params) => {
+      if (params['categoryId']) {
+        this.getAllByCategoryId(params['categoryId']);
+      } else {
+        this.getAll();
+      }
+    });
   }
 
-  getProducts() {
-    this.productService.getProducts().subscribe({
+  getAll() {
+    this.productService.getAll().subscribe({
       next: (response) => {
         this.products = response.data;
         this.dataLoaded = true;
       },
+    });
+  }
+
+  getAllByCategoryId(categoryId: number) {
+    this.productService.getAllByCategoryId(categoryId).subscribe({
+      next: (response) => {
+        this.products = response.data;
+        this.dataLoaded = true;
+      },
+
+      error: (err) => console.error(err),
     });
   }
 }

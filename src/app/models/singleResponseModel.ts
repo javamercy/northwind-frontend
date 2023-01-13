@@ -1,4 +1,4 @@
-import { ResponseModelBase } from './response-model-base';
+import { ResponseModelBase } from './responseModel';
 
 export interface SingleResponseModel<T> extends ResponseModelBase {
   data: T;
