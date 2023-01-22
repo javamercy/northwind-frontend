@@ -6,26 +6,51 @@
   <span class="visually-hidden">Loading...</span>
 </div>
 
+<div class="my-3">
+  <input
+    type="text"
+    class="form-control"
+    id="filterText"
+    placeholder="search.."
+    [(ngModel)]="filterText"
+  />
+</div>
+<div class="alert alert-success lead my-3 p-2" *ngIf="filterText">
+  {{ filterText }}
+</div>
+
 <table
   *ngIf="dataLoaded"
   class="table table-md table-bordered table-hover table-striped text-center mx-auto"
 >
   <thead class="table-dark">
-    <tr>
-      <th class="text-uppercase">product id</th>
-      <th class="text-uppercase">category id</th>
-      <th class="text-uppercase">product name</th>
-      <th class="text-uppercase">unit price</th>
-      <th class="text-uppercase">units in stock</th>
+    <tr class="text-uppercase">
+      <th>product id</th>
+      <th>category id</th>
+      <th>product name</th>
+      <th>unit price</th>
+      <th>price w/ vat</th>
+      <th>units in stock</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let product of products">
+    <tr *ngFor="let product of products | filter : filterText">
       <td>{{ product.productId }}</td>
       <td>{{ product.categoryId }}</td>
-      <td>{{ product.productName }}</td>
-      <td>{{ product.unitPrice }}</td>
+      <td>{{ product.productName | uppercase }}</td>
+      <td>{{ product.unitPrice | currency }}</td>
+      <td>{{ product.unitPrice | vatAdded : 18 | currency }}</td>
       <td>{{ product.unitsInStock }}</td>
+      <td>
+        <button
+          type="button"
+          (click)="addToCart(product)"
+          class="btn btn-success"
+        >
+          Cart
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>

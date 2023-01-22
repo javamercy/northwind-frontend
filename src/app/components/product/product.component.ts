@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 import { Product } from 'src/app/models/product';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -10,12 +12,15 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./product.component.css'],
 })
 export class ProductComponent implements OnInit {
-  products: Product[] = [];
+  products: Product[];
   dataLoaded: boolean = false;
+  filterText: string;
 
   constructor(
     private productService: ProductService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private toastr: ToastrService,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -28,7 +33,7 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  getAll() {
+  getAll(): void {
     this.productService.getAll().subscribe({
       next: (response) => {
         this.products = response.data;
@@ -37,7 +42,7 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  getAllByCategoryId(categoryId: number) {
+  getAllByCategoryId(categoryId: number): void {
     this.productService.getAllByCategoryId(categoryId).subscribe({
       next: (response) => {
         this.products = response.data;
@@ -46,5 +51,10 @@ export class ProductComponent implements OnInit {
 
       error: (err) => console.error(err),
     });
+  }
+
+  addToCart(product: Product): void {
+    this.toastr.success('Added to Cart : ' + product.productName, 'Cart');
+    this.cartService.addToCart(product);
   }
 }
